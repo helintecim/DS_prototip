@@ -45,7 +45,7 @@
             opacity: 0;
         }
         .service-row:hover .service-details {
-            max-height: 150px;
+            max-height: 200px;
             opacity: 1;
         }
 
@@ -88,18 +88,17 @@
 
     <!-- Tipografik Yükleme Ekranı (Preloader) -->
     <div id="preloader" class="fixed inset-0 z-[100] bg-[#050505] flex items-center justify-center">
-        <!-- 'uppercase' sınıfı kaldırıldı, manuel büyük harf yazıldı -->
-        <h2 class="text-lg md:text-2xl font-light tracking-widest text-white animate-pulse text-center px-4">
+        <h2 class="text-base sm:text-lg md:text-2xl font-light tracking-widest text-white animate-pulse text-center px-4">
             COMMUNICATION<br>
             <span class="font-bold text-[#ab0334]">WITHOUT LINES</span>
         </h2>
     </div>
 
     <!-- Navbar & Gizli Menü -->
-    <nav class="fixed w-full z-50 flex justify-between items-center p-8 mix-blend-difference">
-        <div class="text-xl font-bold tracking-widest">DS.</div>
-        <button id="menu-btn" class="focus:outline-none z-50 group">
-            <svg class="w-8 h-8 text-white group-hover:text-[#ab0334] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <nav class="fixed w-full z-50 flex justify-between items-center p-6 md:p-8 mix-blend-difference">
+        <div class="text-lg md:text-xl font-bold tracking-widest">DS.</div>
+        <button id="menu-btn" class="focus:outline-none z-50 group p-2 -mr-2">
+            <svg class="w-7 h-7 md:w-8 md:h-8 text-white group-hover:text-[#ab0334] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path id="menu-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"></path>
             </svg>
         </button>
@@ -113,43 +112,42 @@
             <li><a href="#work" class="hover:text-[#ab0334] transition-colors" onclick="toggleMenu()">Work</a></li>
             <li><a href="#contact" class="hover:text-[#ab0334] transition-colors" onclick="toggleMenu()">Contact</a></li>
         </ul>
-        <div class="mt-12 text-sm text-gray-500 uppercase tracking-widest text-center">
+        <div class="mt-12 text-xs md:text-sm text-gray-500 uppercase tracking-widest text-center">
             <p>info@ds.com.tr</p>
             <p class="mt-2">@dsentegre</p>
         </div>
     </div>
 
     <!-- 1. Hero Section (Vimeo Background) -->
-    <section class="relative h-screen flex items-center justify-center bg-zinc-900">
+    <section class="relative h-screen flex items-center justify-center bg-zinc-900 overflow-hidden">
         <div class="vimeo-wrapper">
             <iframe src="https://player.vimeo.com/video/1215720461?h=f612711b4e&background=1&autoplay=1&loop=1&byline=0&title=0" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
         </div>
         <div class="absolute inset-0 bg-[#050505] opacity-60 z-10"></div>
-        <div class="relative z-20 text-center px-4">
-            <!-- 'uppercase' sınıfı kaldırıldı, manuel büyük harf yazıldı -->
-            <h1 class="text-4xl md:text-6xl font-bold tracking-wide mb-6 leading-tight">COMMUNICATION<br>WITHOUT LINES</h1>
-            <p class="text-sm md:text-base font-light tracking-[0.3em] text-[#ab0334]">EST. 1998 — ISTANBUL</p>
+        <div class="relative z-20 text-center px-4 w-full">
+            <h1 class="text-3xl sm:text-4xl md:text-6xl font-bold tracking-wide mb-4 md:mb-6 leading-tight break-words">COMMUNICATION<br>WITHOUT LINES</h1>
+            <p class="text-xs sm:text-sm md:text-base font-light tracking-[0.2em] md:tracking-[0.3em] text-[#ab0334]">EST. 1998 — ISTANBUL</p>
         </div>
     </section>
 
     <!-- 2. Manifesto / Hakkımızda -->
-    <section id="about" class="py-24 px-6 md:px-20 max-w-6xl mx-auto">
-        <h2 class="text-2xl md:text-4xl font-light leading-relaxed mb-8">
+    <section id="about" class="py-16 md:py-24 px-6 md:px-20 max-w-6xl mx-auto">
+        <h2 class="text-xl sm:text-2xl md:text-4xl font-light leading-relaxed mb-6 md:mb-8">
             "Sadece hikayeler anlatmıyoruz; markalar ve hedef kitleler arasında yatırım getirinizi en üst düzeye çıkarırken kalıcı bir etki bırakan <span class="font-semibold text-[#ab0334]">sürükleyici bağlar kuruyoruz</span>."
         </h2>
-        <p class="text-gray-400 text-base md:text-lg max-w-3xl leading-relaxed">
+        <p class="text-gray-400 text-sm sm:text-base md:text-lg max-w-3xl leading-relaxed">
             Özümüzde, gücünü gerçek dünya içgörülerinden alan tutkulu bir ekibiz. 1998'den bu yana kendimizi geleneksel pazarlamanın ötesine geçen, unutulmaz deneyimler yaratmaya adadık.
         </p>
     </section>
 
     <!-- 3. Hizmetler -->
-    <section id="services" class="py-20 px-6 md:px-20 border-t border-gray-900">
+    <section id="services" class="py-16 md:py-20 px-6 md:px-20 border-t border-gray-900">
         <div class="max-w-6xl mx-auto">
-            <p class="text-xs font-bold tracking-[0.2em] text-[#ab0334] mb-12 uppercase">Neler Yapıyoruz?</p>
+            <p class="text-[10px] md:text-xs font-bold tracking-[0.2em] text-[#ab0334] mb-8 md:mb-12 uppercase">Neler Yapıyoruz?</p>
             
-            <div class="border-b border-gray-900 pb-6 mb-6 service-row cursor-pointer group">
-                <h3 class="text-2xl md:text-4xl font-semibold transition-all">01. Strateji</h3>
-                <div class="service-details mt-4 text-gray-400 text-base">
+            <div class="border-b border-gray-900 pb-4 md:pb-6 mb-4 md:mb-6 service-row cursor-pointer group">
+                <h3 class="text-xl sm:text-2xl md:text-4xl font-semibold transition-all">01. Strateji</h3>
+                <div class="service-details mt-2 md:mt-4 text-gray-400 text-sm md:text-base">
                     <ul class="list-none space-y-2">
                         <li>— Markalaşma</li>
                         <li>— Pazarlama Planlaması</li>
@@ -159,9 +157,9 @@
                 </div>
             </div>
 
-            <div class="border-b border-gray-900 pb-6 mb-6 service-row cursor-pointer group">
-                <h3 class="text-2xl md:text-4xl font-semibold transition-all">02. Yaratıcılık</h3>
-                <div class="service-details mt-4 text-gray-400 text-base">
+            <div class="border-b border-gray-900 pb-4 md:pb-6 mb-4 md:mb-6 service-row cursor-pointer group">
+                <h3 class="text-xl sm:text-2xl md:text-4xl font-semibold transition-all">02. Yaratıcılık</h3>
+                <div class="service-details mt-2 md:mt-4 text-gray-400 text-sm md:text-base">
                     <ul class="list-none space-y-2">
                         <li>— Kurumsal Kimlik</li>
                         <li>— Grafik ve Endüstriyel Tasarım</li>
@@ -170,9 +168,9 @@
                 </div>
             </div>
 
-            <div class="border-b border-gray-900 pb-6 mb-6 service-row cursor-pointer group">
-                <h3 class="text-2xl md:text-4xl font-semibold transition-all">03. Uygulama</h3>
-                <div class="service-details mt-4 text-gray-400 text-base">
+            <div class="border-b border-gray-900 pb-4 md:pb-6 mb-4 md:mb-6 service-row cursor-pointer group">
+                <h3 class="text-xl sm:text-2xl md:text-4xl font-semibold transition-all">03. Uygulama</h3>
+                <div class="service-details mt-2 md:mt-4 text-gray-400 text-sm md:text-base">
                     <ul class="list-none space-y-2">
                         <li>— Prodüksiyon ve Organizasyon</li>
                         <li>— İK Yönetimi</li>
@@ -183,62 +181,62 @@
         </div>
     </section>
 
-    <!-- 4. Seçili İşler (Yatay 4 Kolon) -->
-    <section id="work" class="pt-24 pb-0 border-t border-gray-900">
-        <div class="px-6 md:px-20 mb-12">
-            <!-- 'uppercase' kaldırıldı, manuel 'WORK.' yazıldı -->
-            <h2 class="text-3xl md:text-4xl font-bold tracking-wide">WORK.</h2>
+    <!-- 4. Seçili İşler (Yatay 4 Kolon - Mobil için aspect-[4/3]) -->
+    <section id="work" class="pt-16 md:pt-24 pb-0 border-t border-gray-900">
+        <div class="px-6 md:px-20 mb-8 md:mb-12">
+            <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold tracking-wide">WORK.</h2>
         </div>
         
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-0 border-t border-gray-900">
+        <!-- Mobilde 1 kolon, tablette 2, bilgisayarda 4 kolon -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-0 border-t border-gray-900">
             
-            <!-- Proje 1: Kalebodur -->
-            <div class="work-card relative w-full aspect-square bg-zinc-900 border-b md:border-b-0 md:border-r border-gray-900 overflow-hidden group cursor-pointer">
+            <!-- Proje 1 -->
+            <div class="work-card relative w-full aspect-[4/3] md:aspect-square bg-zinc-900 border-b md:border-b-0 md:border-r border-gray-900 overflow-hidden group cursor-pointer">
                 <img src="Kale_Lansman-275.jpg" alt="Kalebodur Lansman" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 group-hover:opacity-0 z-10">
-                <video class="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-60 transition-opacity duration-500 z-0" loop muted playsinline>
+                <video class="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-60 transition-opacity duration-500 z-0 hidden md:block" loop muted playsinline>
                     <source src="https://assets.mixkit.co/videos/preview/mixkit-ink-swirling-in-water-26772-large.mp4" type="video/mp4">
                 </video>
-                <div class="absolute inset-0 p-6 flex flex-col justify-end z-20 transition-all duration-300 transform md:translate-y-4 group-hover:translate-y-0 opacity-100 md:opacity-0 group-hover:opacity-100 bg-gradient-to-t from-black/80 to-transparent">
-                    <h3 class="text-xl font-bold uppercase leading-tight">Kalebodur 2025</h3>
-                    <p class="text-[#ab0334] font-semibold mt-2 tracking-wide uppercase text-[10px]">B2B + B2C + PR Etkinlik Deneyimi</p>
-                    <p class="text-gray-300 text-xs mt-2 hidden group-hover:block transition-all delay-100">Sergi tasarımı, gala yemeği, canlı konser ve tarihi Boğaz turu.</p>
+                <div class="absolute inset-0 p-4 md:p-6 flex flex-col justify-end z-20 transition-all duration-300 transform md:translate-y-4 group-hover:translate-y-0 opacity-100 md:opacity-0 group-hover:opacity-100 bg-gradient-to-t from-black/90 via-black/40 to-transparent md:from-black/80 md:to-transparent">
+                    <h3 class="text-lg md:text-xl font-bold uppercase leading-tight text-white">Kalebodur 2025</h3>
+                    <p class="text-[#ab0334] font-semibold mt-1 md:mt-2 tracking-wide uppercase text-[9px] md:text-[10px]">B2B + B2C + PR Etkinlik Deneyimi</p>
+                    <p class="text-gray-300 text-[10px] md:text-xs mt-2 hidden group-hover:block transition-all delay-100">Sergi tasarımı, gala yemeği, canlı konser ve tarihi Boğaz turu.</p>
                 </div>
             </div>
 
-            <!-- Proje 2: Apple & Turkcell -->
-            <div class="work-card relative w-full aspect-square bg-zinc-900 border-b md:border-b-0 md:border-r border-gray-900 overflow-hidden group cursor-pointer">
+            <!-- Proje 2 -->
+            <div class="work-card relative w-full aspect-[4/3] md:aspect-square bg-zinc-900 border-b md:border-b-0 md:border-r border-gray-900 overflow-hidden group cursor-pointer">
                 <img src="Apple_Raffles-9.jpg" alt="Apple ve Turkcell 5G" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 group-hover:opacity-0 z-10">
-                <video class="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-60 transition-opacity duration-500 z-0" loop muted playsinline>
+                <video class="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-60 transition-opacity duration-500 z-0 hidden md:block" loop muted playsinline>
                     <source src="https://assets.mixkit.co/videos/preview/mixkit-abstract-technology-connection-lines-loop-27354-large.mp4" type="video/mp4">
                 </video>
-                <div class="absolute inset-0 p-6 flex flex-col justify-end z-20 transition-all duration-300 transform md:translate-y-4 group-hover:translate-y-0 opacity-100 md:opacity-0 group-hover:opacity-100 bg-gradient-to-t from-black/80 to-transparent">
-                    <h3 class="text-xl font-bold uppercase leading-tight">Turkcell 5G</h3>
-                    <p class="text-[#ab0334] font-semibold mt-2 tracking-wide uppercase text-[10px]">Lansman Etkinliği</p>
-                    <p class="text-gray-300 text-xs mt-2 hidden group-hover:block transition-all delay-100">Global bir teknoloji markasıyla sahnelenen lansman deneyimi.</p>
+                <div class="absolute inset-0 p-4 md:p-6 flex flex-col justify-end z-20 transition-all duration-300 transform md:translate-y-4 group-hover:translate-y-0 opacity-100 md:opacity-0 group-hover:opacity-100 bg-gradient-to-t from-black/90 via-black/40 to-transparent md:from-black/80 md:to-transparent">
+                    <h3 class="text-lg md:text-xl font-bold uppercase leading-tight text-white">Turkcell 5G</h3>
+                    <p class="text-[#ab0334] font-semibold mt-1 md:mt-2 tracking-wide uppercase text-[9px] md:text-[10px]">Lansman Etkinliği</p>
+                    <p class="text-gray-300 text-[10px] md:text-xs mt-2 hidden group-hover:block transition-all delay-100">Global bir teknoloji markasıyla sahnelenen lansman deneyimi.</p>
                 </div>
             </div>
 
-            <!-- Proje 3: Bodrum Cup -->
-            <div class="work-card relative w-full aspect-square bg-zinc-900 border-b md:border-b-0 md:border-r border-gray-900 overflow-hidden group cursor-pointer">
+            <!-- Proje 3 -->
+            <div class="work-card relative w-full aspect-[4/3] md:aspect-square bg-zinc-900 border-b md:border-b-0 md:border-r border-gray-900 overflow-hidden group cursor-pointer">
                 <img src="BodrumCup_İstanbul_30Eylül-521.jpg" alt="Bodrum Cup İstanbul" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 group-hover:opacity-0 z-10">
-                <video class="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-60 transition-opacity duration-500 z-0" loop muted playsinline>
+                <video class="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-60 transition-opacity duration-500 z-0 hidden md:block" loop muted playsinline>
                     <source src="https://assets.mixkit.co/videos/preview/mixkit-ink-swirling-in-water-26772-large.mp4" type="video/mp4">
                 </video>
-                <div class="absolute inset-0 p-6 flex flex-col justify-end z-20 transition-all duration-300 transform md:translate-y-4 group-hover:translate-y-0 opacity-100 md:opacity-0 group-hover:opacity-100 bg-gradient-to-t from-black/80 to-transparent">
-                    <h3 class="text-xl font-bold uppercase leading-tight">BodrumCup İstanbul</h3>
-                    <p class="text-[#ab0334] font-semibold mt-2 tracking-wide uppercase text-[10px]">Marka Deneyimi</p>
+                <div class="absolute inset-0 p-4 md:p-6 flex flex-col justify-end z-20 transition-all duration-300 transform md:translate-y-4 group-hover:translate-y-0 opacity-100 md:opacity-0 group-hover:opacity-100 bg-gradient-to-t from-black/90 via-black/40 to-transparent md:from-black/80 md:to-transparent">
+                    <h3 class="text-lg md:text-xl font-bold uppercase leading-tight text-white">BodrumCup İstanbul</h3>
+                    <p class="text-[#ab0334] font-semibold mt-1 md:mt-2 tracking-wide uppercase text-[9px] md:text-[10px]">Marka Deneyimi</p>
                 </div>
             </div>
 
-            <!-- Proje 4: İş Bankası Webrazzi -->
-            <div class="work-card relative w-full aspect-square bg-zinc-900 overflow-hidden group cursor-pointer">
+            <!-- Proje 4 -->
+            <div class="work-card relative w-full aspect-[4/3] md:aspect-square bg-zinc-900 border-b md:border-b-0 border-gray-900 overflow-hidden group cursor-pointer">
                 <img src="Webrazzi_İşBankası-33.jpg" alt="İş Bankası Webrazzi" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 group-hover:opacity-0 z-10">
-                <video class="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-60 transition-opacity duration-500 z-0" loop muted playsinline>
+                <video class="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-60 transition-opacity duration-500 z-0 hidden md:block" loop muted playsinline>
                     <source src="https://assets.mixkit.co/videos/preview/mixkit-abstract-technology-connection-lines-loop-27354-large.mp4" type="video/mp4">
                 </video>
-                <div class="absolute inset-0 p-6 flex flex-col justify-end z-20 transition-all duration-300 transform md:translate-y-4 group-hover:translate-y-0 opacity-100 md:opacity-0 group-hover:opacity-100 bg-gradient-to-t from-black/80 to-transparent">
-                    <h3 class="text-xl font-bold uppercase leading-tight">İş Bankası Webrazzi</h3>
-                    <p class="text-[#ab0334] font-semibold mt-2 tracking-wide uppercase text-[10px]">Kurumsal İletişim & Etkinlik</p>
+                <div class="absolute inset-0 p-4 md:p-6 flex flex-col justify-end z-20 transition-all duration-300 transform md:translate-y-4 group-hover:translate-y-0 opacity-100 md:opacity-0 group-hover:opacity-100 bg-gradient-to-t from-black/90 via-black/40 to-transparent md:from-black/80 md:to-transparent">
+                    <h3 class="text-lg md:text-xl font-bold uppercase leading-tight text-white">İş Bankası Webrazzi</h3>
+                    <p class="text-[#ab0334] font-semibold mt-1 md:mt-2 tracking-wide uppercase text-[9px] md:text-[10px]">Kurumsal İletişim & Etkinlik</p>
                 </div>
             </div>
 
@@ -246,57 +244,57 @@
     </section>
 
     <!-- 5. Markalar (Marquee) -->
-    <section class="py-20 bg-[#050505] overflow-hidden">
-        <div class="max-w-6xl mx-auto px-6 mb-12">
-            <p class="text-xs font-bold tracking-[0.2em] text-[#ab0334] uppercase text-center">Seçkin Müşterilerimiz</p>
+    <section class="py-16 md:py-20 bg-[#050505] overflow-hidden">
+        <div class="max-w-6xl mx-auto px-6 mb-8 md:mb-12">
+            <p class="text-[10px] md:text-xs font-bold tracking-[0.2em] text-[#ab0334] uppercase text-center">Seçkin Müşterilerimiz</p>
         </div>
         <div class="relative flex overflow-x-hidden group">
             <div class="marquee-wrapper items-center opacity-40 grayscale">
-                <span class="text-2xl font-semibold mx-12 tracking-wide">TÜRKİYE BANKASI</span>
-                <span class="text-2xl font-semibold mx-12 tracking-wide">MEY DIAGEO</span>
-                <span class="text-2xl font-semibold mx-12 tracking-wide">KALEBODUR</span>
-                <span class="text-2xl font-semibold mx-12 tracking-wide">ANADOLU SİGORTA</span>
-                <span class="text-2xl font-semibold mx-12 tracking-wide">ULUDAĞ İÇECEK</span>
-                <span class="text-2xl font-semibold mx-12 tracking-wide">MASERATI</span>
+                <span class="text-xl sm:text-2xl font-semibold mx-8 md:mx-12 tracking-wide whitespace-nowrap">TÜRKİYE BANKASI</span>
+                <span class="text-xl sm:text-2xl font-semibold mx-8 md:mx-12 tracking-wide whitespace-nowrap">MEY DIAGEO</span>
+                <span class="text-xl sm:text-2xl font-semibold mx-8 md:mx-12 tracking-wide whitespace-nowrap">KALEBODUR</span>
+                <span class="text-xl sm:text-2xl font-semibold mx-8 md:mx-12 tracking-wide whitespace-nowrap">ANADOLU SİGORTA</span>
+                <span class="text-xl sm:text-2xl font-semibold mx-8 md:mx-12 tracking-wide whitespace-nowrap">ULUDAĞ İÇECEK</span>
+                <span class="text-xl sm:text-2xl font-semibold mx-8 md:mx-12 tracking-wide whitespace-nowrap">MASERATI</span>
                 
-                <span class="text-2xl font-semibold mx-12 tracking-wide">TÜRKİYE BANKASI</span>
-                <span class="text-2xl font-semibold mx-12 tracking-wide">MEY DIAGEO</span>
-                <span class="text-2xl font-semibold mx-12 tracking-wide">KALEBODUR</span>
-                <span class="text-2xl font-semibold mx-12 tracking-wide">ANADOLU SİGORTA</span>
-                <span class="text-2xl font-semibold mx-12 tracking-wide">ULUDAĞ İÇECEK</span>
-                <span class="text-2xl font-semibold mx-12 tracking-wide">MASERATI</span>
+                <span class="text-xl sm:text-2xl font-semibold mx-8 md:mx-12 tracking-wide whitespace-nowrap">TÜRKİYE BANKASI</span>
+                <span class="text-xl sm:text-2xl font-semibold mx-8 md:mx-12 tracking-wide whitespace-nowrap">MEY DIAGEO</span>
+                <span class="text-xl sm:text-2xl font-semibold mx-8 md:mx-12 tracking-wide whitespace-nowrap">KALEBODUR</span>
+                <span class="text-xl sm:text-2xl font-semibold mx-8 md:mx-12 tracking-wide whitespace-nowrap">ANADOLU SİGORTA</span>
+                <span class="text-xl sm:text-2xl font-semibold mx-8 md:mx-12 tracking-wide whitespace-nowrap">ULUDAĞ İÇECEK</span>
+                <span class="text-xl sm:text-2xl font-semibold mx-8 md:mx-12 tracking-wide whitespace-nowrap">MASERATI</span>
             </div>
         </div>
     </section>
 
     <!-- FOOTER -->
-    <footer id="contact" class="pt-24 pb-12 px-6 md:px-20 border-t border-gray-900 bg-[#0a0a0a]">
-        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-end gap-16 mb-16">
+    <footer id="contact" class="pt-16 md:pt-24 pb-8 md:pb-12 px-6 md:px-20 border-t border-gray-900 bg-[#0a0a0a]">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-end gap-10 md:gap-16 mb-12 md:mb-16">
             
             <div>
-                <h2 class="text-5xl md:text-7xl font-bold hover:text-[#ab0334] cursor-pointer transition-colors leading-none mb-4">LET'S TALK.</h2>
+                <h2 class="text-4xl sm:text-5xl md:text-7xl font-bold hover:text-[#ab0334] cursor-pointer transition-colors leading-none mb-2 md:mb-4">LET'S TALK.</h2>
             </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 text-sm text-gray-400">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 md:gap-12 text-sm text-gray-400 w-full md:w-auto mt-4 md:mt-0">
                 <div>
-                    <p class="font-bold text-white mb-4 uppercase tracking-[0.2em] text-xs">Ofİs</p>
-                    <p class="leading-relaxed">İletişim bilgileriniz ve adresiniz<br>buraya eklenecektir.<br>34000, Istanbul</p>
+                    <p class="font-bold text-white mb-2 md:mb-4 uppercase tracking-[0.2em] text-[10px] md:text-xs">Ofİs</p>
+                    <p class="leading-relaxed text-xs md:text-sm">İletişim bilgileriniz ve adresiniz<br>buraya eklenecektir.<br>34000, Istanbul</p>
                 </div>
                 <div>
-                    <p class="font-bold text-white mb-4 uppercase tracking-[0.2em] text-xs">İletİşİm</p>
-                    <p class="hover:text-[#ab0334] cursor-pointer transition-colors mb-2">info@ds.com.tr</p>
+                    <p class="font-bold text-white mb-2 md:mb-4 uppercase tracking-[0.2em] text-[10px] md:text-xs">İletİşİm</p>
+                    <p class="hover:text-[#ab0334] cursor-pointer transition-colors mb-2 text-xs md:text-sm">info@ds.com.tr</p>
                     
-                    <div class="mt-6 flex gap-6">
-                        <a href="https://instagram.com/dsentegre" target="_blank" class="hover:text-[#ab0334] transition-colors font-bold uppercase tracking-[0.2em] text-xs">@dsentegre</a>
-                        <a href="https://linkedin.com" target="_blank" class="hover:text-[#ab0334] transition-colors font-bold uppercase tracking-[0.2em] text-xs">LinkedIn</a>
+                    <div class="mt-4 md:mt-6 flex gap-4 md:gap-6">
+                        <a href="https://instagram.com/dsentegre" target="_blank" class="hover:text-[#ab0334] transition-colors font-bold uppercase tracking-[0.2em] text-[10px] md:text-xs">@dsentegre</a>
+                        <a href="https://linkedin.com" target="_blank" class="hover:text-[#ab0334] transition-colors font-bold uppercase tracking-[0.2em] text-[10px] md:text-xs">LinkedIn</a>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="max-w-6xl mx-auto border-t border-gray-900 pt-8 flex flex-col md:flex-row justify-between items-center text-[10px] text-gray-600 uppercase tracking-widest">
+        <div class="max-w-6xl mx-auto border-t border-gray-900 pt-6 md:pt-8 flex flex-col md:flex-row justify-between items-center text-[9px] md:text-[10px] text-gray-600 uppercase tracking-widest gap-2 md:gap-0">
             <p>DS İLETİŞİM - ISTANBUL</p>
-            <p class="mt-2 md:mt-0">&copy; 2026 Tüm Hakları Saklıdır.</p>
+            <p>&copy; 2026 Tüm Hakları Saklıdır.</p>
         </div>
     </footer>
 
@@ -321,26 +319,32 @@
             if (isMenuOpen) {
                 mobileMenu.classList.add('open');
                 menuIcon.setAttribute('d', 'M6 18L18 6M6 6l12 12');
+                // Mobilde menü açıkken scroll'u engelle
+                document.body.style.overflow = 'hidden';
             } else {
                 mobileMenu.classList.remove('open');
                 menuIcon.setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
+                // Menü kapandığında scroll'u geri aç
+                document.body.style.overflow = '';
             }
         }
         menuBtn.addEventListener('click', toggleMenu);
 
-        // Hover anında Video Oynatma
-        document.querySelectorAll('.work-card').forEach(card => {
-            const video = card.querySelector('video');
-            if(video) {
-                card.addEventListener('mouseenter', () => {
-                    video.play();
-                });
-                card.addEventListener('mouseleave', () => {
-                    video.pause();
-                    video.currentTime = 0;
-                });
-            }
-        });
+        // Masaüstü için Hover anında Video Oynatma (Mobilde videolar gizli olduğu için performansı artırır)
+        if (window.innerWidth >= 768) {
+            document.querySelectorAll('.work-card').forEach(card => {
+                const video = card.querySelector('video');
+                if(video) {
+                    card.addEventListener('mouseenter', () => {
+                        video.play();
+                    });
+                    card.addEventListener('mouseleave', () => {
+                        video.pause();
+                        video.currentTime = 0;
+                    });
+                }
+            });
+        }
     </script>
 </body>
 </html>
