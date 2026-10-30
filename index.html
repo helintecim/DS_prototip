@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DS İletişim — Communication Without Lines</title>
+<meta name="description" content="">
+<meta name="theme-color" content="#f6f3ea">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = { theme: { extend: { colors: {
+    ink: '#231f20', cream: '#f6f3ea',
+    crimson: '#a81b40'
+  } } } };
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+  body { font-family: 'Montserrat', sans-serif; background: #f6f3ea; color: #231f20; overflow-x: hidden; }
+  ::selection { background: rgba(168,27,64,.2); color: #231f20; }
+  :focus-visible { outline: 2px solid #a81b40; outline-offset: 3px; }
+
+  #preloader { transition: opacity .8s ease-in-out, visibility .8s; }
+  #mobile-menu { transition: transform .4s cubic-bezier(.77,0,.175,1); transform: translateY(-100%); visibility: hidden; }
+  #mobile-menu.open { transform: translateY(0); visibility: visible; }
+
+  .eyebrow { font-size: .75rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; }
+
+  /* Üst menü: arka plansız; hero üzerinde beyaz, diğer yerlerde koyu */
+  nav { color: #231f20; transition: color .3s; }
+  nav.on-hero { color: #fff; }
+  .logo-w { display: none; }
+  nav.on-hero .logo-w { display: block; }
+  nav.on-hero .logo-c { display: none; }
+
+  /* Dil değiştirici */
+  .lang-switch { display: inline-flex; gap: 1rem; }
+  .lang-btn { font-size: .75rem; font-weight: 700; letter-spacing: .15em; padding: .2rem 0; border-bottom: 2px solid transparent; opacity: .55; transition: opacity .25s, border-color .25s; }
+  .lang-btn:hover { opacity: 1; }
+  .lang-btn[aria-pressed="true"] { opacity: 1; border-bottom-color: #a81b40; }
+
+  /* Hizmetler akordeon */
+  .svc { border-bottom: 1px solid rgba(246,243,234,.15); padding: 1.75rem 0; cursor: pointer; transition: border-color .3s; }
+  .svc:hover, .svc.open { border-bottom-color: #a81b40; }
+  .svc-title { transition: color .3s; }
+    .svc-plus { transition: transform .3s; color: #f6f3ea; }
+  .svc.open .svc-plus { transform: rotate(45deg); }
+  .svc-body { display: grid; grid-template-rows: 0fr; opacity: 0; transition: grid-template-rows .45s ease, opacity .45s ease; }
+  .svc-body > div { overflow: hidden; }
+  .svc.open .svc-body { grid-template-rows: 1fr; opacity: 1; }
+  @media (hover: hover) { .svc:hover .svc-body { grid-template-rows: 1fr; opacity: 1; } .svc:hover .svc-plus { transform: rotate(45deg); } }
+  .chip { display: inline-block; border: 1px solid rgba(246,243,234,.3); border-radius: 999px; padding: .35rem .9rem; font-size: .75rem; color: rgba(246,243,234,.85); }
+
+  /* Neler Yapıyoruz */
+  .do-grid { border-top: 1px solid rgba(35,31,32,.15); border-left: 1px solid rgba(35,31,32,.15); }
+  .do-cell { min-height: 150px; padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between; gap: 1.5rem; border-right: 1px solid rgba(35,31,32,.15); border-bottom: 1px solid rgba(35,31,32,.15); transition: color .3s; }
+  .do-cell:hover { color: #a81b40; }
+  .do-num { font-size: .75rem; font-weight: 700; letter-spacing: .2em; color: #a81b40; }
+  .do-txt { font-size: 1rem; font-weight: 600; line-height: 1.35; }
+  @media (min-width: 768px) { .do-txt { font-size: 1.125rem; } }
+
+  /* Marquee */
+  .marquee { display: flex; width: max-content; animation: scroll 30s linear infinite; }
+  .marquee:hover { animation-play-state: paused; }
+  @keyframes scroll { to { transform: translateX(-50%); } }
+
+  .vimeo-wrapper { position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+  .vimeo-wrapper iframe { width: 100vw; height: 56.25vw; min-height: 100vh; min-width: 177.77vh; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); }
+
+  @media (prefers-reduced-motion: reduce) { .marquee { animation: none; } html { scroll-behavior: auto; } }
+</style>
+</head>
+<body class="antialiased">
+
+<!-- Preloader -->
+<div id="preloader" class="fixed inset-0 z-[100] bg-cream flex items-center justify-center">
+  <img data-logo alt="DS — Communication Without Lines" class="w-56 md:w-80 animate-pulse">
+</div>
+
+<!-- Navbar -->
+<nav class="on-hero fixed top-0 w-full z-50 flex justify-between items-center px-6 md:px-12 py-4">
+  <a href="#top" aria-label="DS"><img data-logo alt="DS — Communication Without Lines" class="logo-c h-12 w-auto"><img data-logo="w" alt="DS — Communication Without Lines" class="logo-w h-12 w-auto"></a>
+  <div class="flex items-center gap-4 md:gap-6">
+    <div class="lang-switch" role="group" aria-label="Language">
+      <button class="lang-btn" data-lang="tr" aria-pressed="true">TR</button>
+      <button class="lang-btn" data-lang="en" aria-pressed="false">EN</button>
+    </div>
+    <button id="menu-btn" class="group" aria-label="Menu" aria-expanded="false" aria-controls="mobile-menu">
+      <svg class="w-8 h-8 group-hover:text-crimson transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path id="menu-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"></path>
+      </svg>
+    </button>
+  </div>
+</nav>
+
+<!-- Tam ekran menü -->
+<div id="mobile-menu" class="fixed inset-0 bg-cream text-ink z-40 flex flex-col justify-center items-center h-screen w-full">
+  <ul class="text-center space-y-6 text-3xl md:text-5xl font-semibold tracking-wide">
+    <li><a href="#about" class="hover:text-crimson transition-colors" data-i18n="nav_about"></a></li>
+    <li><a href="#services" class="hover:text-crimson transition-colors" data-i18n="nav_services"></a></li>
+    <li><a href="#work" class="hover:text-crimson transition-colors" data-i18n="nav_work"></a></li>
+    <li><a href="#contact" class="hover:text-crimson transition-colors" data-i18n="nav_contact"></a></li>
+  </ul>
+  <div class="mt-12 text-sm text-ink/60 uppercase tracking-widest text-center">
+    <p>info@ds.com.tr</p>
+    <p class="mt-2">@dsentegre</p>
+  </div>
+</div>
+
+<!-- 1. Hero -->
+<section id="top" data-dark class="relative h-screen flex items-center justify-center text-white">
+  <div class="vimeo-wrapper">
+    <iframe src="https://player.vimeo.com/video/1215720461?h=f612711b4e&background=1&autoplay=1&loop=1&byline=0&title=0" frameborder="0" allow="autoplay; fullscreen" allowfullscreen title="DS"></iframe>
+  </div>
+  <div class="absolute inset-0 bg-ink/50 z-10"></div>
+  <div class="relative z-20 text-center px-4">
+    <h1 class="text-4xl md:text-6xl font-bold tracking-wide mb-6 leading-tight text-white">COMMUNICATION<br>WITHOUT LINES</h1>
+    <p class="text-sm md:text-base font-semibold tracking-[0.3em] text-crimson" data-i18n="hero_est"></p>
+  </div>
+</section>
+
+<!-- 2. Hakkımızda -->
+<section id="about" class="bg-cream text-ink py-24 px-6 md:px-20">
+  <div class="max-w-6xl mx-auto">
+    <p class="eyebrow text-crimson mb-8" data-i18n="about_label"></p>
+    <h2 class="text-3xl md:text-5xl font-semibold leading-tight max-w-4xl" data-i18n="about_h"></h2>
+    <p class="text-xl md:text-3xl font-light text-crimson mt-4 mb-14" data-i18n="about_sub"></p>
+
+    <div class="grid md:grid-cols-2 gap-8 md:gap-16 text-base md:text-lg leading-relaxed text-ink/75">
+      <p data-i18n="about_p1"></p>
+      <p data-i18n="about_p2"></p>
+    </div>
+
+    <blockquote class="mt-14 border-l-4 border-crimson pl-6 md:pl-8 text-xl md:text-2xl font-semibold leading-snug max-w-4xl" data-i18n="about_goal"></blockquote>
+
+    <div class="mt-16 border border-ink/15 border-t-4 border-t-crimson p-8 md:p-12">
+      <p class="eyebrow text-crimson mb-4" data-i18n="blurb_label"></p>
+      <p class="text-base md:text-lg leading-relaxed text-ink/80 max-w-4xl" data-i18n="blurb"></p>
+    </div>
+  </div>
+</section>
+
+<!-- 3. Hizmetler -->
+<section id="services" data-dark class="py-24 px-6 md:px-20 bg-ink text-cream">
+  <div class="max-w-6xl mx-auto">
+    <p class="eyebrow text-crimson mb-6" data-i18n="svc_label"></p>
+    <p class="text-lg md:text-2xl font-light leading-relaxed max-w-4xl mb-14 text-cream/90" data-i18n="svc_intro"></p>
+    <div id="svc-list" class="border-t border-cream/15"></div>
+  </div>
+</section>
+
+<!-- 4. Neler Yapıyoruz -->
+<section class="py-24 px-6 md:px-20 border-t border-ink/10">
+  <div class="max-w-6xl mx-auto">
+    <h2 class="text-4xl md:text-6xl font-bold leading-none mb-14 text-crimson" data-i18n="do_label"></h2>
+    <div id="do-list" class="do-grid grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4"></div>
+  </div>
+</section>
+
+<!-- 5. Work -->
+<section id="work" data-dark class="pt-24 bg-ink text-cream">
+  <div class="px-6 md:px-20 mb-12">
+    <h2 class="text-3xl md:text-4xl font-bold tracking-wide">WORK<span class="text-crimson">.</span></h2>
+  </div>
+  <div id="work-grid" class="grid grid-cols-1 md:grid-cols-4 border-t border-cream/10"></div>
+</section>
+
+<!-- 6. Müşteriler -->
+<section class="py-20 border-t border-ink/10 overflow-hidden">
+  <p class="eyebrow text-crimson text-center mb-12 px-6" data-i18n="clients_label"></p>
+  <div class="marquee items-center text-ink/50" aria-hidden="true" id="marquee"></div>
+</section>
+
+<!-- Footer -->
+<footer id="contact" data-dark class="pt-24 pb-12 px-6 md:px-20 bg-ink text-cream">
+  <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-end gap-16 mb-16">
+    <div class="flex flex-col gap-10 md:gap-14">
+      <img data-logo="w" alt="DS — Communication Without Lines" class="h-16 md:h-20 w-auto self-start">
+      <a href="mailto:info@ds.com.tr" class="text-5xl md:text-7xl font-bold text-crimson hover:underline decoration-crimson decoration-4 underline-offset-8 transition-colors leading-none" data-i18n="cta"></a>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 text-sm text-cream/70">
+      <div>
+        <p class="font-bold text-crimson mb-4 uppercase tracking-[0.2em] text-xs" data-i18n="office"></p>
+        <p class="leading-relaxed" data-i18n="address"></p>
+      </div>
+      <div>
+        <p class="font-bold text-crimson mb-4 uppercase tracking-[0.2em] text-xs" data-i18n="contact"></p>
+        <a href="mailto:info@ds.com.tr" class="hover:text-white transition-colors">info@ds.com.tr</a>
+        <div class="mt-6 flex gap-6">
+          <a href="https://instagram.com/dsentegre" target="_blank" rel="noopener" class="hover:text-white transition-colors font-bold tracking-[0.2em] text-xs">@DSENTEGRE</a>
+          <a href="https://linkedin.com" target="_blank" rel="noopener" class="hover:text-white transition-colors font-bold tracking-[0.2em] text-xs">LINKEDIN</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="max-w-6xl mx-auto border-t border-cream/15 pt-8 flex flex-col md:flex-row justify-between items-center text-[10px] text-cream/50 tracking-widest">
+    <p>DS İLETİŞİM — <span data-i18n="city"></span></p>
+    <p class="mt-2 md:mt-0">&copy; 2026 <span data-i18n="rights"></span></p>
+  </div>
+</footer>
+
+<script>
+const I18N = {
+tr: {
+  title: "DS İletişim — Communication Without Lines",
+  desc: "DS İletişim, 1998’den beri Türkiye’de doğmuş bağımsız bir deneyim ve iletişim ajansıdır.",
+  nav_about: "Hakkımızda", nav_services: "Hizmetler", nav_work: "Çalışmalar", nav_contact: "İletişim",
+  hero_est: "KURULUŞ 1998 — İSTANBUL",
+  about_label: "Hakkımızda",
+  about_h: "Bir markayı insanların aklında tutan nedir?",
+  about_sub: "1998’den beri bu soruyla uyanıyoruz.",
+  about_p1: "DS İletişim, Türkiye’de doğmuş; Dubai ve Fransa’daki kardeş şirketleriyle sınırlarını genişletmiş bir deneyim ve iletişim ajansıdır. Fikirden sahnedeki son ışığa kadar her aşamayı uçtan uca üstleniyoruz. Bağımsızız. Bu sayede müşterilerimize çok daha özenli bir hizmet veriyoruz. Worldwide Partners’ın küresel ağındaki meslektaşlarımız da ihtiyaç olduğunda hep bir telefon uzaklığında.",
+  about_p2: "Dünyanın önde gelen markalarıyla çalışıyoruz ama işe hep aynı yerden başlıyoruz: dinleyerek. Önce gerçekten neye ihtiyaç olduğunu anlıyoruz. Sonra dünyada olup biteni takip ediyor, insanları gözlemliyor, stratejimizi kuruyoruz. Gerisi kreatifliğin işi.",
+  about_goal: "Hedefimiz de hep aynı: Detayları ve yarattığı deneyim ile akılda kalan, iz bırakan işler.",
+  blurb_label: "Hakkımızda",
+  blurb: "DS İletişim, Türkiye merkezli, bağımsız ve tam hizmet veren bir deneyimsel pazarlama ve iletişim ajansıdır. Bağımsız bir ajansın kişisel ilgisini, her ölçekteki projeyi hem yerelde hem sınır ötesinde hayata geçirecek uzmanlıkla birleştiriyoruz. Bağımsız ajanslardan oluşan küresel bir ağ olan Worldwide Partners’ın üyesi olarak müşterilerimize yerel içgörüyü uluslararası iş birliğiyle buluşturuyoruz.",
+  svc_label: "Hizmetlerimiz",
+  svc_intro: "Bir kampanya fikri, bir basın lansmanı, bir şehir maratonu ya da EuroLeague sahasında bir sponsorluk etkinliği... Ölçeği ve formatı ne olursa olsun, her işe aynı dört adımla yaklaşıyoruz.",
+  services: [
+    { t: "Strateji", p: "Her şey bir soruyla başlar: Bu markanın gerçekten neye ihtiyacı var? Cevabı bulmak için önce dinliyoruz. Sonra hedef kitleyi tanıyor, dünyada olup biteni takip ediyoruz. Bir kampanyanın ya da deneyimin neden var olduğunu ve sonunda neyi değiştireceğini bilmeden yola çıkmıyoruz.",
+      tags: ["Brief analizi","Hedef kitle ve içgörü","Trend araştırması","Kampanya stratejisi","Konsept yönü","Sponsorluk stratejisi","Ölçümleme"] },
+    { t: "Yaratıcılık", p: "Strateji yolu gösterir, fikir yürütür. Ardından ekibimiz devralır ve fikri hikayesiyle, görsel diliyle ve en küçük detayıyla birlikte ele alır. Bir kampanyanın ana görselinden satış noktasındaki materyale, sosyal medya içeriğinden mekan tasarımına kadar, fikrin her temas noktasında aynı sesle konuşmasını sağlıyoruz.",
+      tags: ["Kampanya fikri","Key visual","Sosyal medya kampanyaları ve içerik","Basılı ve açık hava tasarımı","Trade marketing ve satış noktası materyalleri","Etkinlik konsepti","Marka kimliği","Ürün ve mekan tasarımı"] },
+    { t: "Saha Uygulama", p: "Güzel fikirler sahada sınanır. Sahne kuruluyor, ışıklar yanıyor, ilk misafir kapıdan giriyor... O anda her şeyin yerli yerinde olması gerekir. Bodrum’da bir regattada da, Roma’da bir akşam yemeğinde de her detayı yerinde, tek tek takip ediyoruz. Misafir akıp giden bir akşam yaşar. Arkasındaki yüzlerce ayrıntıyı biz düşünürüz.",
+      tags: ["Sahne ve dekor","Işık ve ses","Mekan ve lojistik","İzinler","Misafir ağırlama","Ekip yönetimi","Uluslararası organizasyon"] },
+    { t: "Prodüksiyon", p: "Bazı hikayeler en iyi kamerayla anlatılır. Kardeş yapım şirketimiz Speak Easy Project ile kampanyalar için dijital filmler çekiyoruz. Etkinliklerde ise iş ışıklar sönünce bitmiyor. Merak uyandıran video davetiyeler ve etkinliğin ruhunu taşıyan after movie’lerle yaşanan anı sosyal medyada ve markanın arşivinde yaşatıyoruz.",
+      tags: ["Dijital filmler","Video davetiyeler","After movie","Fotoğraf çekimleri","Sosyal medya içerikleri"] }
+  ],
+  do_label: "Neler Yapıyoruz",
+  doing: ["Kampanyalar","Trade marketing ve satış noktası","Ürün lansmanları","Basın lansmanları","Sponsorluk aktivasyonları","Spor karşılaşmaları ve maratonlar","Festivaller","Tadım deneyimleri","Gastronomi etkinlikleri","Özel davetler","B2B ve bayi etkinlikleri","Uluslararası organizasyonlar"],
+  work: [
+    ["B2B + B2C + PR Etkinlik Deneyimi", "Sergi tasarımı, gala yemeği, canlı konser ve tarihi Boğaz turu."],
+    ["Lansman Etkinliği", "Global bir teknoloji markasıyla sahnelenen lansman deneyimi."],
+    ["Marka Deneyimi", ""],
+    ["Kurumsal İletişim & Etkinlik", ""]
+  ],
+  clients_label: "Seçkin Müşterilerimiz",
+  cta: "KONUŞALIM.",
+  office: "Ofis", address: "İletişim bilgileriniz ve adresiniz<br>buraya eklenecektir.<br>34000, İstanbul",
+  contact: "İletişim", city: "İSTANBUL", rights: "Tüm Hakları Saklıdır."
+},
+en: {
+  title: "DS İletişim — Communication Without Lines",
+  desc: "DS İletişim is an independent, full-service experiential marketing and communications agency based in Türkiye.",
+  nav_about: "About", nav_services: "Services", nav_work: "Work", nav_contact: "Contact",
+  hero_est: "EST. 1998 — ISTANBUL",
+  about_label: "Who We Are",
+  about_h: "What keeps a brand on people’s minds?",
+  about_sub: "We’ve been waking up to that question since 1998.",
+  about_p1: "DS İletişim is an experience and communications agency born in Turkey, with sister companies in Dubai and France that have taken us well beyond our borders. From the first idea to the last light on stage, we own every step. We’re independent, which means we give every project the care we’d give our own. And when we need them, our colleagues across the Worldwide Partners network are always just a phone call away.",
+  about_p2: "We work with some of the world’s leading brands, but we always start in the same place: by listening. First, we understand what’s really needed. Then we follow what’s happening in the world, observe people and build our strategy. The rest is up to creativity.",
+  about_goal: "Our aim is clear: work that stays in the mind through its details and leaves a mark through the experience it creates.",
+  blurb_label: "About",
+  blurb: "DS İletişim is an independent, full-service experiential marketing and communications agency based in Türkiye. We combine the personal attention of an independent agency with the expertise to deliver projects of every scale, both locally and across borders. As a member of Worldwide Partners, a global network of independent agencies, we bring our clients local insight and international collaboration.",
+  svc_label: "Services",
+  svc_intro: "A campaign idea, a press launch, a city marathon or a courtside sponsorship event at the EuroLeague... Whatever the scale or format, we approach every project in the same four steps.",
+  services: [
+    { t: "Strategy", p: "It all starts with a question: What does this brand really need? To find the answer, we listen first. Then we get to know the audience and keep track of what’s happening in the world. We never set off without knowing why a campaign or an experience exists, and what it should change in the end.",
+      tags: ["Brief analysis","Audience & insight","Trend research","Campaign strategy","Concept direction","Sponsorship strategy","Measurement"] },
+    { t: "Creativity", p: "Strategy shows the way; the idea makes the journey. Then our team takes over, shaping the idea through its story, its visual language and its smallest details. From a campaign’s key visual to point-of-sale materials, from social content to spatial design, we make sure the idea speaks with one voice at every touchpoint.",
+      tags: ["Campaign ideas","Key visuals","Social media campaigns & content","Print & outdoor design","Trade marketing & POS materials","Event concepts","Brand identity","Product & spatial design"] },
+    { t: "Execution", p: "Great ideas are tested on the ground. The stage goes up, the lights come on, the first guest walks through the door... At that moment, everything has to be in its place. Whether it’s a regatta in Bodrum or a dinner in Rome, we follow every detail on site, one by one. Guests experience an evening that simply flows. We take care of the hundreds of details behind it.",
+      tags: ["Stage & set","Lighting & sound","Venue & logistics","Permits","Hospitality","Team management","International event organization"] },
+    { t: "Production", p: "Some stories are best told on camera. With our sister production company Speak Easy Project, we shoot digital films for campaigns. With events, the work doesn’t end when the lights go down. Through video invitations that spark curiosity and after-movies that capture the spirit of the night, we keep the moment alive on social media and in the brand’s archive.",
+      tags: ["Digital films","Video invitations","After-movies","Photography","Social media content"] }
+  ],
+  do_label: "What We Do",
+  doing: ["Campaigns","Trade marketing & point of sale","Product launches","Press launches","Sponsorship activations","Sports matches & marathons","Festivals","Tasting experiences","Culinary events","Private events","B2B & dealer events","International events"],
+  work: [
+    ["B2B + B2C + PR Event Experience", "Exhibition design, gala dinner, live concert and a historic Bosphorus tour."],
+    ["Launch Event", "A launch experience staged with a global technology brand."],
+    ["Brand Experience", ""],
+    ["Corporate Communications & Events", ""]
+  ],
+  clients_label: "Selected Clients",
+  cta: "LET’S TALK.",
+  office: "Office", address: "Your address and contact details<br>will be added here.<br>34000, Istanbul",
+  contact: "Contact", city: "ISTANBUL", rights: "All rights reserved."
+}};
+
+const WORK = [
+  { img: "Kale_Lansman-275.jpg", alt: "Kalebodur", name: "KALEBODUR 2025", vid: "mixkit-ink-swirling-in-water-26772-large.mp4" },
+  { img: "Apple_Raffles-9.jpg", alt: "Turkcell 5G", name: "TURKCELL 5G", vid: "mixkit-abstract-technology-connection-lines-loop-27354-large.mp4" },
+  { img: "BodrumCup_İstanbul_30Eylül-521.jpg", alt: "BodrumCup İstanbul", name: "BODRUMCUP İSTANBUL", vid: "mixkit-ink-swirling-in-water-26772-large.mp4" },
+  { img: "Webrazzi_İşBankası-33.jpg", alt: "İş Bankası Webrazzi", name: "İŞ BANKASI WEBRAZZI", vid: "mixkit-abstract-technology-connection-lines-loop-27354-large.mp4" }
+];
+const CLIENTS = ["TÜRKİYE BANKASI","MEY DIAGEO","KALEBODUR","ANADOLU SİGORTA","ULUDAĞ İÇECEK","MASERATI"];
+
+/* Logolar artık GitHub'daki dosyalardan yüklenir (index.html ile aynı klasörde olmalı) */
+const LOGO = "logo.png";
+document.querySelectorAll("img[data-logo]").forEach(i => i.src = LOGO);
+const LOGO_W = "logo-w.png";
+document.querySelectorAll('img[data-logo="w"]').forEach(i => i.src = LOGO_W);
+const fav = document.createElement("link"); fav.rel = "icon"; fav.href = LOGO; document.head.appendChild(fav);
+const $ = (s, r = document) => r.querySelector(s);
+
+function renderWork(t) {
+  $("#work-grid").innerHTML = WORK.map((w, i) => `
+    <div class="work-card relative w-full aspect-square ${i < 3 ? "border-b md:border-b-0 md:border-r border-cream/10" : ""} overflow-hidden group cursor-pointer">
+      <img src="${w.img}" alt="${w.alt}" loading="lazy" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 group-hover:opacity-0 z-10">
+      <video class="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-60 transition-opacity duration-500 z-0" loop muted playsinline>
+        <source src="https://assets.mixkit.co/videos/preview/${w.vid}" type="video/mp4">
+      </video>
+      <div class="absolute inset-0 p-6 flex flex-col justify-end z-20 transition-all duration-300 md:translate-y-4 group-hover:translate-y-0 opacity-100 md:opacity-0 group-hover:opacity-100 bg-gradient-to-t from-ink/90 via-ink/50 to-transparent text-cream">
+        <h3 class="text-xl font-bold leading-tight">${w.name}</h3>
+        <p class="text-cream/70 font-semibold mt-2 tracking-wide uppercase text-[10px]">${t.work[i][0]}</p>
+        ${t.work[i][1] ? `<p class="text-cream/85 text-xs mt-2 hidden group-hover:block">${t.work[i][1]}</p>` : ""}
+      </div>
+    </div>`).join("");
+  document.querySelectorAll(".work-card").forEach(card => {
+    const v = $("video", card);
+    card.addEventListener("mouseenter", () => v.play().catch(() => {}));
+    card.addEventListener("mouseleave", () => { v.pause(); v.currentTime = 0; });
+  });
+}
+
+function setLang(lang) {
+  const t = I18N[lang] || I18N.tr;
+  document.documentElement.lang = lang;
+  document.title = t.title;
+  $('meta[name="description"]').content = t.desc;
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    const v = t[el.dataset.i18n];
+    if (v.includes("<br>")) el.innerHTML = v; else el.textContent = v;
+  });
+  $("#svc-list").innerHTML = t.services.map((s, i) => `
+    <div class="svc" role="button" tabindex="0" aria-expanded="false">
+      <div class="flex items-baseline justify-between gap-4">
+        <h3 class="svc-title text-2xl md:text-4xl font-semibold"><span class="text-crimson text-base md:text-lg font-bold mr-4">0${i + 1}</span>${s.t}</h3>
+        <span class="svc-plus text-3xl font-light leading-none">+</span>
+      </div>
+      <div class="svc-body"><div>
+        <p class="mt-5 text-cream/75 leading-relaxed max-w-3xl">${s.p}</p>
+        <div class="mt-5 flex flex-wrap gap-2">${s.tags.map(x => `<span class="chip">${x}</span>`).join("")}</div>
+      </div></div>
+    </div>`).join("");
+  $("#do-list").innerHTML = t.doing.map((x, i) => `<div class="do-cell"><span class="do-num">${String(i + 1).padStart(2, "0")}</span><span class="do-txt">${x}</span></div>`).join("");
+  renderWork(t);
+  document.querySelectorAll(".lang-btn").forEach(b => b.setAttribute("aria-pressed", b.dataset.lang === lang));
+  try { localStorage.setItem("ds-lang", lang); } catch (e) {}
+}
+
+/* Dil seçimi: kayıtlı tercih → tarayıcı dili (tr ise TR, değilse EN). Hep TR açılsın isterseniz 'tr' yazın. */
+let saved = null;
+try { saved = localStorage.getItem("ds-lang"); } catch (e) {}
+setLang(saved || ((navigator.language || "tr").toLowerCase().startsWith("tr") ? "tr" : "en"));
+document.querySelectorAll(".lang-btn").forEach(b => b.addEventListener("click", () => setLang(b.dataset.lang)));
+
+/* Marquee */
+const group = CLIENTS.map(c => `<span class="text-2xl font-semibold mx-12 tracking-wide whitespace-nowrap">${c}</span>`).join("");
+$("#marquee").innerHTML = group + group + group + group;
+$("#marquee").style.animationDuration = "40s";
+
+/* Hizmetler akordeon */
+$("#svc-list").addEventListener("click", e => {
+  const row = e.target.closest(".svc"); if (!row) return;
+  row.classList.toggle("open"); row.setAttribute("aria-expanded", row.classList.contains("open"));
+});
+$("#svc-list").addEventListener("keydown", e => {
+  if ((e.key === "Enter" || e.key === " ") && e.target.classList.contains("svc")) { e.preventDefault(); e.target.click(); }
+});
+
+/* Preloader */
+window.addEventListener("load", () => setTimeout(() => {
+  const p = $("#preloader"); p.style.opacity = "0"; p.style.visibility = "hidden";
+}, 1500));
+
+/* Menü */
+const menu = $("#mobile-menu"), icon = $("#menu-icon"), btn = $("#menu-btn");
+function toggleMenu(force) {
+  const open = typeof force === "boolean" ? force : !menu.classList.contains("open");
+  menu.classList.toggle("open", open);
+  btn.setAttribute("aria-expanded", open);
+  navState();
+  icon.setAttribute("d", open ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16");
+}
+btn.addEventListener("click", () => toggleMenu());
+menu.querySelectorAll("a").forEach(a => a.addEventListener("click", () => toggleMenu(false)));
+document.addEventListener("keydown", e => { if (e.key === "Escape") toggleMenu(false); });
+
+/* Üst menü rengi: hero üzerinde beyaz, sonrasında koyu */
+const nav = $("nav");
+const darks = document.querySelectorAll("[data-dark]");
+function navState() {
+  let on = false;
+  if (!menu.classList.contains("open")) darks.forEach(d => { const b = d.getBoundingClientRect(); if (b.top <= 40 && b.bottom >= 40) on = true; });
+  nav.classList.toggle("on-hero", on);
+}
+window.addEventListener("scroll", navState, { passive: true });
+window.addEventListener("resize", navState);
+navState();
+</script>
+</body>
+</html>
