@@ -15,7 +15,8 @@
 </script>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
-  html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+  html { scroll-behavior: smooth; scroll-padding-top: 110px; }
+  html { -webkit-text-size-adjust: 100%; }
   body { font-family: 'Montserrat', sans-serif; background: #f6f3ea; color: #231f20; overflow-x: hidden; }
   ::selection { background: rgba(168,27,64,.2); color: #231f20; }
   :focus-visible { outline: 2px solid #a81b40; outline-offset: 3px; }
@@ -24,9 +25,11 @@
   #mobile-menu { transition: transform .4s cubic-bezier(.77,0,.175,1); transform: translateY(-100%); visibility: hidden; }
   #mobile-menu.open { transform: translateY(0); visibility: visible; }
 
-  .eyebrow { font-size: .75rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; }
+  /* Bölüm başlıkları: büyütüldü, yalnızca baş harf büyük */
+  .eyebrow { font-size: 1.125rem; font-weight: 700; letter-spacing: .06em; }
+  @media (min-width: 768px) { .eyebrow { font-size: 1.5rem; } }
 
-  /* Üst menü: arka plansız; hero üzerinde beyaz, diğer yerlerde koyu */
+  /* Üst menü: arka plansız; koyu bölümlerde beyaz, açık bölümlerde koyu */
   nav { color: #231f20; transition: color .3s; }
   nav.on-hero { color: #fff; }
   .logo-w { display: none; }
@@ -35,7 +38,7 @@
 
   /* Dil değiştirici */
   .lang-switch { display: inline-flex; gap: 1rem; }
-  .lang-btn { font-size: .75rem; font-weight: 700; letter-spacing: .15em; padding: .2rem 0; border-bottom: 2px solid transparent; opacity: .55; transition: opacity .25s, border-color .25s; }
+  .lang-btn { font-size: .8rem; font-weight: 700; letter-spacing: .15em; padding: .5rem .25rem; border-bottom: 2px solid transparent; opacity: .55; transition: opacity .25s, border-color .25s; }
   .lang-btn:hover { opacity: 1; }
   .lang-btn[aria-pressed="true"] { opacity: 1; border-bottom-color: #a81b40; }
 
@@ -43,7 +46,7 @@
   .svc { border-bottom: 1px solid rgba(246,243,234,.15); padding: 1.75rem 0; cursor: pointer; transition: border-color .3s; }
   .svc:hover, .svc.open { border-bottom-color: #a81b40; }
   .svc-title { transition: color .3s; }
-    .svc-plus { transition: transform .3s; color: #f6f3ea; }
+  .svc-plus { transition: transform .3s; color: #f6f3ea; }
   .svc.open .svc-plus { transform: rotate(45deg); }
   .svc-body { display: grid; grid-template-rows: 0fr; opacity: 0; transition: grid-template-rows .45s ease, opacity .45s ease; }
   .svc-body > div { overflow: hidden; }
@@ -53,11 +56,16 @@
 
   /* Neler Yapıyoruz */
   .do-grid { border-top: 1px solid rgba(35,31,32,.15); border-left: 1px solid rgba(35,31,32,.15); }
-  .do-cell { min-height: 150px; padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between; gap: 1.5rem; border-right: 1px solid rgba(35,31,32,.15); border-bottom: 1px solid rgba(35,31,32,.15); transition: color .3s; }
+  .do-cell { min-height: 130px; padding: 1rem; overflow-wrap: break-word; hyphens: auto; display: flex; flex-direction: column; justify-content: space-between; gap: 1.5rem; border-right: 1px solid rgba(35,31,32,.15); border-bottom: 1px solid rgba(35,31,32,.15); transition: color .3s; }
   .do-cell:hover { color: #a81b40; }
   .do-num { font-size: .75rem; font-weight: 700; letter-spacing: .2em; color: #a81b40; }
-  .do-txt { font-size: 1rem; font-weight: 600; line-height: 1.35; }
-  @media (min-width: 768px) { .do-txt { font-size: 1.125rem; } }
+  .do-txt { font-size: .9rem; font-weight: 600; line-height: 1.35; }
+  @media (min-width: 768px) { .do-cell { min-height: 150px; padding: 1.5rem; } .do-txt { font-size: 1.125rem; } }
+
+  /* Proje açıklaması: mobilde her zaman görünür, masaüstünde üzerine gelince */
+  .work-desc { display: block; }
+  @media (min-width: 768px) { .work-desc { display: none; } .group:hover .work-desc { display: block; } }
+  .hero { height: 100vh; height: 100svh; min-height: 520px; }
 
   /* Marquee */
   .marquee { display: flex; width: max-content; animation: scroll 30s linear infinite; }
@@ -74,18 +82,18 @@
 
 <!-- Preloader -->
 <div id="preloader" class="fixed inset-0 z-[100] bg-cream flex items-center justify-center">
-  <img data-logo alt="DS — Communication Without Lines" class="w-56 md:w-80 animate-pulse">
+  <img data-logo alt="DS — Communication Without Lines" class="w-72 md:w-[32rem] max-w-[85vw] animate-pulse">
 </div>
 
 <!-- Navbar -->
-<nav class="on-hero fixed top-0 w-full z-50 flex justify-between items-center px-6 md:px-12 py-4">
-  <a href="#top" aria-label="DS"><img data-logo alt="DS — Communication Without Lines" class="logo-c h-12 w-auto"><img data-logo="w" alt="DS — Communication Without Lines" class="logo-w h-12 w-auto"></a>
+<nav class="on-hero fixed top-0 w-full z-50 flex justify-between items-center px-5 sm:px-6 md:px-12 py-3 md:py-4">
+  <a href="#top" aria-label="DS"><img data-logo alt="DS — Communication Without Lines" class="logo-c h-[4.5rem] sm:h-24 md:h-32 w-auto"><img data-logo="w" alt="DS — Communication Without Lines" class="logo-w h-[4.5rem] sm:h-24 md:h-32 w-auto"></a>
   <div class="flex items-center gap-4 md:gap-6">
     <div class="lang-switch" role="group" aria-label="Language">
       <button class="lang-btn" data-lang="tr" aria-pressed="true">TR</button>
       <button class="lang-btn" data-lang="en" aria-pressed="false">EN</button>
     </div>
-    <button id="menu-btn" class="group" aria-label="Menu" aria-expanded="false" aria-controls="mobile-menu">
+    <button id="menu-btn" class="group p-1" aria-label="Menu" aria-expanded="false" aria-controls="mobile-menu">
       <svg class="w-8 h-8 group-hover:text-crimson transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path id="menu-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"></path>
       </svg>
@@ -94,33 +102,33 @@
 </nav>
 
 <!-- Tam ekran menü -->
-<div id="mobile-menu" class="fixed inset-0 bg-cream text-ink z-40 flex flex-col justify-center items-center h-screen w-full">
+<div id="mobile-menu" class="fixed inset-0 bg-cream text-ink z-40 flex flex-col justify-center items-center">
   <ul class="text-center space-y-6 text-3xl md:text-5xl font-semibold tracking-wide">
     <li><a href="#about" class="hover:text-crimson transition-colors" data-i18n="nav_about"></a></li>
     <li><a href="#services" class="hover:text-crimson transition-colors" data-i18n="nav_services"></a></li>
     <li><a href="#work" class="hover:text-crimson transition-colors" data-i18n="nav_work"></a></li>
     <li><a href="#contact" class="hover:text-crimson transition-colors" data-i18n="nav_contact"></a></li>
   </ul>
-  <div class="mt-12 text-sm text-ink/60 uppercase tracking-widest text-center">
+  <div class="mt-12 text-base text-ink/60 text-center">
     <p>info@ds.com.tr</p>
     <p class="mt-2">@dsentegre</p>
   </div>
 </div>
 
 <!-- 1. Hero -->
-<section id="top" data-dark class="relative h-screen flex items-center justify-center text-white">
+<section id="top" data-dark class="hero relative flex items-center justify-center text-white">
   <div class="vimeo-wrapper">
     <iframe src="https://player.vimeo.com/video/1215720461?h=f612711b4e&background=1&autoplay=1&loop=1&byline=0&title=0" frameborder="0" allow="autoplay; fullscreen" allowfullscreen title="DS"></iframe>
   </div>
   <div class="absolute inset-0 bg-ink/50 z-10"></div>
   <div class="relative z-20 text-center px-4">
-    <h1 class="text-4xl md:text-6xl font-bold tracking-wide mb-6 leading-tight text-white">COMMUNICATION<br>WITHOUT LINES</h1>
-    <p class="text-sm md:text-base font-semibold tracking-[0.3em] text-crimson" data-i18n="hero_est"></p>
+    <h1 class="text-3xl sm:text-5xl md:text-6xl font-bold tracking-wide mb-6 leading-tight text-white">COMMUNICATION<br>WITHOUT LINES</h1>
+    <p class="text-sm sm:text-base md:text-xl font-semibold tracking-[0.1em] text-crimson" data-i18n="hero_est"></p>
   </div>
 </section>
 
 <!-- 2. Hakkımızda -->
-<section id="about" class="bg-cream text-ink py-24 px-6 md:px-20">
+<section id="about" class="bg-cream text-ink py-16 md:py-24 px-6 md:px-20">
   <div class="max-w-6xl mx-auto">
     <p class="eyebrow text-crimson mb-8" data-i18n="about_label"></p>
     <h2 class="text-3xl md:text-5xl font-semibold leading-tight max-w-4xl" data-i18n="about_h"></h2>
@@ -133,7 +141,7 @@
 
     <blockquote class="mt-14 border-l-4 border-crimson pl-6 md:pl-8 text-xl md:text-2xl font-semibold leading-snug max-w-4xl" data-i18n="about_goal"></blockquote>
 
-    <div class="mt-16 border border-ink/15 border-t-4 border-t-crimson p-8 md:p-12">
+    <div class="mt-12 md:mt-16 border border-ink/15 border-t-4 border-t-crimson p-6 md:p-12">
       <p class="eyebrow text-crimson mb-4" data-i18n="blurb_label"></p>
       <p class="text-base md:text-lg leading-relaxed text-ink/80 max-w-4xl" data-i18n="blurb"></p>
     </div>
@@ -141,7 +149,7 @@
 </section>
 
 <!-- 3. Hizmetler -->
-<section id="services" data-dark class="py-24 px-6 md:px-20 bg-ink text-cream">
+<section id="services" data-dark class="py-16 md:py-24 px-6 md:px-20 bg-ink text-cream">
   <div class="max-w-6xl mx-auto">
     <p class="eyebrow text-crimson mb-6" data-i18n="svc_label"></p>
     <p class="text-lg md:text-2xl font-light leading-relaxed max-w-4xl mb-14 text-cream/90" data-i18n="svc_intro"></p>
@@ -150,7 +158,7 @@
 </section>
 
 <!-- 4. Neler Yapıyoruz -->
-<section class="py-24 px-6 md:px-20 border-t border-ink/10">
+<section class="py-16 md:py-24 px-6 md:px-20 border-t border-ink/10">
   <div class="max-w-6xl mx-auto">
     <h2 class="text-4xl md:text-6xl font-bold leading-none mb-14 text-crimson" data-i18n="do_label"></h2>
     <div id="do-list" class="do-grid grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4"></div>
@@ -158,9 +166,9 @@
 </section>
 
 <!-- 5. Work -->
-<section id="work" data-dark class="pt-24 bg-ink text-cream">
+<section id="work" data-dark class="pt-16 md:pt-24 bg-ink text-cream">
   <div class="px-6 md:px-20 mb-12">
-    <h2 class="text-3xl md:text-4xl font-bold tracking-wide">WORK<span class="text-crimson">.</span></h2>
+    <h2 class="text-4xl md:text-6xl font-bold tracking-wide">Work<span class="text-crimson">.</span></h2>
   </div>
   <div id="work-grid" class="grid grid-cols-1 md:grid-cols-4 border-t border-cream/10"></div>
 </section>
@@ -172,29 +180,29 @@
 </section>
 
 <!-- Footer -->
-<footer id="contact" data-dark class="pt-24 pb-12 px-6 md:px-20 bg-ink text-cream">
+<footer id="contact" data-dark class="pt-16 md:pt-24 pb-10 px-6 md:px-20 bg-ink text-cream">
   <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-end gap-16 mb-16">
     <div class="flex flex-col gap-10 md:gap-14">
-      <img data-logo="w" alt="DS — Communication Without Lines" class="h-16 md:h-20 w-auto self-start">
-      <a href="mailto:info@ds.com.tr" class="text-5xl md:text-7xl font-bold text-crimson hover:underline decoration-crimson decoration-4 underline-offset-8 transition-colors leading-none" data-i18n="cta"></a>
+      <img data-logo="w" alt="DS — Communication Without Lines" class="h-28 md:h-40 w-auto self-start">
+      <a href="mailto:info@ds.com.tr" class="text-4xl sm:text-5xl md:text-7xl font-bold text-crimson hover:underline decoration-crimson decoration-4 underline-offset-8 transition-colors leading-none" data-i18n="cta"></a>
     </div>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 text-sm text-cream/70">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 text-sm md:text-base text-cream/70">
       <div>
-        <p class="font-bold text-crimson mb-4 uppercase tracking-[0.2em] text-xs" data-i18n="office"></p>
+        <p class="font-bold text-crimson mb-4 text-lg md:text-xl" data-i18n="office"></p>
         <p class="leading-relaxed" data-i18n="address"></p>
       </div>
       <div>
-        <p class="font-bold text-crimson mb-4 uppercase tracking-[0.2em] text-xs" data-i18n="contact"></p>
+        <p class="font-bold text-crimson mb-4 text-lg md:text-xl" data-i18n="contact"></p>
         <a href="mailto:info@ds.com.tr" class="hover:text-white transition-colors">info@ds.com.tr</a>
         <div class="mt-6 flex gap-6">
-          <a href="https://instagram.com/dsentegre" target="_blank" rel="noopener" class="hover:text-white transition-colors font-bold tracking-[0.2em] text-xs">@DSENTEGRE</a>
-          <a href="https://linkedin.com" target="_blank" rel="noopener" class="hover:text-white transition-colors font-bold tracking-[0.2em] text-xs">LINKEDIN</a>
+          <a href="https://instagram.com/dsentegre" target="_blank" rel="noopener" class="hover:text-white transition-colors font-bold">@dsentegre</a>
+          <a href="https://linkedin.com" target="_blank" rel="noopener" class="hover:text-white transition-colors font-bold">LinkedIn</a>
         </div>
       </div>
     </div>
   </div>
-  <div class="max-w-6xl mx-auto border-t border-cream/15 pt-8 flex flex-col md:flex-row justify-between items-center text-[10px] text-cream/50 tracking-widest">
-    <p>DS İLETİŞİM — <span data-i18n="city"></span></p>
+  <div class="max-w-6xl mx-auto border-t border-cream/15 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-cream/50 tracking-wide">
+    <p>DS İletişim — <span data-i18n="city"></span></p>
     <p class="mt-2 md:mt-0">&copy; 2026 <span data-i18n="rights"></span></p>
   </div>
 </footer>
@@ -205,7 +213,7 @@ tr: {
   title: "DS İletişim — Communication Without Lines",
   desc: "DS İletişim, 1998’den beri Türkiye’de doğmuş bağımsız bir deneyim ve iletişim ajansıdır.",
   nav_about: "Hakkımızda", nav_services: "Hizmetler", nav_work: "Çalışmalar", nav_contact: "İletişim",
-  hero_est: "KURULUŞ 1998 — İSTANBUL",
+  hero_est: "Kuruluş 1998 — İstanbul",
   about_label: "Hakkımızda",
   about_h: "Bir markayı insanların aklında tutan nedir?",
   about_sub: "1998’den beri bu soruyla uyanıyoruz.",
@@ -235,15 +243,15 @@ tr: {
     ["Kurumsal İletişim & Etkinlik", ""]
   ],
   clients_label: "Seçkin Müşterilerimiz",
-  cta: "KONUŞALIM.",
+  cta: "Konuşalım.",
   office: "Ofis", address: "İletişim bilgileriniz ve adresiniz<br>buraya eklenecektir.<br>34000, İstanbul",
-  contact: "İletişim", city: "İSTANBUL", rights: "Tüm Hakları Saklıdır."
+  contact: "İletişim", city: "İstanbul", rights: "Tüm Hakları Saklıdır."
 },
 en: {
   title: "DS İletişim — Communication Without Lines",
   desc: "DS İletişim is an independent, full-service experiential marketing and communications agency based in Türkiye.",
   nav_about: "About", nav_services: "Services", nav_work: "Work", nav_contact: "Contact",
-  hero_est: "EST. 1998 — ISTANBUL",
+  hero_est: "Est. 1998 — Istanbul",
   about_label: "Who We Are",
   about_h: "What keeps a brand on people’s minds?",
   about_sub: "We’ve been waking up to that question since 1998.",
@@ -265,7 +273,7 @@ en: {
       tags: ["Digital films","Video invitations","After-movies","Photography","Social media content"] }
   ],
   do_label: "What We Do",
-  doing: ["Campaigns","Trade marketing & point of sale","Product launches","Press launches","Sponsorship activations","Sports matches & marathons","Festivals","Tasting experiences","Culinary events","Private events","B2B & dealer events","International events"],
+  doing: ["Campaigns","Trade Marketing & Point of Sale","Product Launches","Press Launches","Sponsorship Activations","Sports Matches & Marathons","Festivals","Tasting Experiences","Culinary Events","Private Events","B2B & Dealer Events","International Events"],
   work: [
     ["B2B + B2C + PR Event Experience", "Exhibition design, gala dinner, live concert and a historic Bosphorus tour."],
     ["Launch Event", "A launch experience staged with a global technology brand."],
@@ -273,38 +281,47 @@ en: {
     ["Corporate Communications & Events", ""]
   ],
   clients_label: "Selected Clients",
-  cta: "LET’S TALK.",
+  cta: "Let’s Talk.",
   office: "Office", address: "Your address and contact details<br>will be added here.<br>34000, Istanbul",
-  contact: "Contact", city: "ISTANBUL", rights: "All rights reserved."
+  contact: "Contact", city: "Istanbul", rights: "All rights reserved."
 }};
 
+/* Görseller: uzantısız dosya adı yazılır (jpg/JPG/jpeg/png/webp otomatik denenir). Dosyalar index.html ile aynı klasörde olmalı. */
 const WORK = [
-  { img: "Kale_Lansman-275.jpg", alt: "Kalebodur", name: "KALEBODUR 2025", vid: "mixkit-ink-swirling-in-water-26772-large.mp4" },
-  { img: "Apple_Raffles-9.jpg", alt: "Turkcell 5G", name: "TURKCELL 5G", vid: "mixkit-abstract-technology-connection-lines-loop-27354-large.mp4" },
-  { img: "BodrumCup.jpg", alt: "BodrumCup İstanbul", name: "BODRUMCUP İSTANBUL", vid: "mixkit-ink-swirling-in-water-26772-large.mp4" },
-  { img: "Webrazzi.jpg", alt: "İş Bankası Webrazzi", name: "İŞ BANKASI WEBRAZZI", vid: "mixkit-abstract-technology-connection-lines-loop-27354-large.mp4" }
+  { base: "Kale_Lansman-275", alt: "Kalebodur", name: "Kalebodur 2025", vid: "mixkit-ink-swirling-in-water-26772-large.mp4" },
+  { base: "Apple_Raffles-9", alt: "Turkcell 5G", name: "Turkcell 5G", vid: "mixkit-abstract-technology-connection-lines-loop-27354-large.mp4" },
+  { base: "BodrumCup", alt: "BodrumCup İstanbul", name: "BodrumCup İstanbul", vid: "mixkit-ink-swirling-in-water-26772-large.mp4" },
+  { base: "Webrazzi", alt: "İş Bankası Webrazzi", name: "İş Bankası Webrazzi", vid: "mixkit-abstract-technology-connection-lines-loop-27354-large.mp4" }
 ];
-const CLIENTS = ["TÜRKİYE BANKASI","MEY DIAGEO","KALEBODUR","ANADOLU SİGORTA","ULUDAĞ İÇECEK","MASERATI"];
+const CLIENTS = ["Türkiye Bankası","Mey Diageo","Kalebodur","Anadolu Sigorta","Uludağ İçecek","Maserati"];
 
-/* Logolar artık GitHub'daki dosyalardan yüklenir (index.html ile aynı klasörde olmalı) */
-const LOGO = "logo.png";
+/* Logolar: index.html ile aynı klasördeki logo.png ve logo-w.png (?v=2 eski önbelleği temizler) */
+const LOGO = "logo.png?v=2";
 document.querySelectorAll("img[data-logo]").forEach(i => i.src = LOGO);
-const LOGO_W = "logo-w.png";
+const LOGO_W = "logo-w.png?v=2";
 document.querySelectorAll('img[data-logo="w"]').forEach(i => i.src = LOGO_W);
 const fav = document.createElement("link"); fav.rel = "icon"; fav.href = LOGO; document.head.appendChild(fav);
 const $ = (s, r = document) => r.querySelector(s);
 
+/* Görsel bulunamazsa diğer uzantıları dener */
+function imgFallback(el) {
+  const exts = ["JPG", "jpeg", "JPEG", "png", "webp"];
+  const i = +(el.dataset.try || 0);
+  if (i < exts.length) { el.dataset.try = i + 1; el.src = el.dataset.base + "." + exts[i]; }
+  else el.style.display = "none";
+}
+
 function renderWork(t) {
   $("#work-grid").innerHTML = WORK.map((w, i) => `
     <div class="work-card relative w-full aspect-square ${i < 3 ? "border-b md:border-b-0 md:border-r border-cream/10" : ""} overflow-hidden group cursor-pointer">
-      <img src="${w.img}" alt="${w.alt}" loading="lazy" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 group-hover:opacity-0 z-10">
+      <img src="${w.base}.jpg" data-base="${w.base}" alt="${w.alt}" onerror="imgFallback(this)" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 group-hover:opacity-0 z-10">
       <video class="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-60 transition-opacity duration-500 z-0" loop muted playsinline>
         <source src="https://assets.mixkit.co/videos/preview/${w.vid}" type="video/mp4">
       </video>
       <div class="absolute inset-0 p-6 flex flex-col justify-end z-20 transition-all duration-300 md:translate-y-4 group-hover:translate-y-0 opacity-100 md:opacity-0 group-hover:opacity-100 bg-gradient-to-t from-ink/90 via-ink/50 to-transparent text-cream">
-        <h3 class="text-xl font-bold leading-tight">${w.name}</h3>
-        <p class="text-cream/70 font-semibold mt-2 tracking-wide uppercase text-[10px]">${t.work[i][0]}</p>
-        ${t.work[i][1] ? `<p class="text-cream/85 text-xs mt-2 hidden group-hover:block">${t.work[i][1]}</p>` : ""}
+        <h3 class="text-xl md:text-2xl font-bold leading-tight">${w.name}</h3>
+        <p class="text-cream/70 font-semibold mt-2 text-xs md:text-sm">${t.work[i][0]}</p>
+        ${t.work[i][1] ? `<p class="work-desc text-cream/85 text-xs md:text-sm mt-2">${t.work[i][1]}</p>` : ""}
       </div>
     </div>`).join("");
   document.querySelectorAll(".work-card").forEach(card => {
@@ -378,7 +395,7 @@ btn.addEventListener("click", () => toggleMenu());
 menu.querySelectorAll("a").forEach(a => a.addEventListener("click", () => toggleMenu(false)));
 document.addEventListener("keydown", e => { if (e.key === "Escape") toggleMenu(false); });
 
-/* Üst menü rengi: hero üzerinde beyaz, sonrasında koyu */
+/* Üst menü rengi: koyu bölümlerde beyaz, açık bölümlerde koyu */
 const nav = $("nav");
 const darks = document.querySelectorAll("[data-dark]");
 function navState() {
